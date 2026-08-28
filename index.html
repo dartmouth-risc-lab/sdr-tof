@@ -1,13 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SDR ToF</title>
-</head>
-<body>
-
-  <h1>SDR ToF</h1>
-
+<html lang="en" data-venue="siggraph-asia"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="reconstruct music out of depth changes of a speaker diaphragm, A high speed depth acquisition model.">
+  <meta property="og:title" content="SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio" />
+  <meta property="og:description" content="reconstruct music out of depth changes of a speaker diaphragm, A high speed depth acquisition model." />
+  <meta property="og:url" content="https://dartmouth-risc-lab.github.io/sdr-tof/" />
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:title" content="SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio">
+  <meta name="twitter:description" content="reconstruct music out of depth changes of a speaker diaphragm, A high speed depth acquisition model.">
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="MHz depth Measurement, GHz LiDAR, Continous Wave TOF, CWToF, GHz Correlation Tof, depth vibrometer, RF interferometer">
+  <meta name="author" content="Ramchander Bhaskara, Dhawal Sirikonda, Omkar Vengurlekar, Juhyeon Kim, Joseph Lazarro, Suren Jayasuriya, Adithya Pediredla">  <title>SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio</title>
+  <link rel="icon" href="static/images/icon.png" type="image/png">  <!-- CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <!-- Your overrides must come last -->
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/custom-fonts.css">
+  <style>
+    /* affiliation color injections from the script */
+    .publication-authors .author-block.affil-1, .publication-authors .author-block.affil-1 a { color: #1F673C !important; font-weight: 600; }
+.publication-authors .affiliations .affil-1 { color: #1F673C; font-weight: 600; }
+.publication-authors .author-block.affil-2, .publication-authors .author-block.affil-2 a { color: #8C1D40 !important; font-weight: 600; }
+.publication-authors .affiliations .affil-2 { color: #8C1D40; font-weight: 600; }
+  </style>  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head><body>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio</h1>            <div class="is-size-5 publication-authors"><span class="author-block affil-1"><a href="https://ram-bhaskara.github.io/" target="_blank">Ramchander Bhaskara<sup>†</sup></a></span>, <span class="author-block affil-1"><a href="https://dhawal.xyz/" target="_blank">Dhawal Sirikonda<sup>†</sup></a></span>, <span class="author-block affil-2"><a href="https://scholar.google.com/citations?user=wpP8K-4AAAAJ&hl=en" target="_blank">Omkar Vengurlekar<sup>†</sup></a></span></div>
+<div class="is-size-5 publication-authors"><span class="author-block affil-1"><a href="https://juhyeonkim.netlify.app/" target="_blank">Juhyeon Kim</a></span>, <span class="author-block affil-1"><a href="https://scholar.google.com/citations?user=G7BiskQAAAAJ&hl=en" target="_blank">Joseph Lazarro</a></span></div>
+<div class="is-size-5 publication-authors"><span class="author-block affil-2"><a href="https://sites.google.com/asu.edu/imaging-lyceum" target="_blank">Suren Jayasuriya</a></span>, <span class="author-block affil-1"><a href="https://risclab-dartmouth.org/people/adithya-pediredla/" target="_blank">Adithya Pediredla</a></span></div>            <div class="is-size-5 publication-authors">
+              <div class="author-block">
+                <div class="equal-contribution">(† = Equal contribution)</div>
+                <div class="affiliations"><span class="affil-1">Dartmouth College</span>, <span class="affil-2">Arizona State University</span></div>
+              </div>
+            </div>            <div class="publication-links">
+              <span class="link-block"><a href="static/pdfs/paper.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+              <span class="link-block"><a href="https://github.com/dartmouth-risc-lab/MHz-depth-sensing" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
+              <span class="link-block"><a href="static/pdfs/suppl.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Supplementary PDF</span></a></span>
+              <span class="link-block"><a href="#Results" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-chart-bar"></i></span><span>Results</span></a></span>
+              <span class="link-block"><a href="#supplementary-video" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-play-circle"></i></span><span>Supplementary Video</span></a></span>              <span class="link-block">
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-book"></i></span>
+                  <span>Citation</span>
+                </a>
+              </span>
+            </div>            <p class="acceptance-tag" style="background-image: linear-gradient(90deg, #1F673C 0%, #8C1D40 100%);">
+              <strong>Accepted to SIGGRAPH Asia 2026 (ACM ToG)</strong>
+            </p>          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="static/images/teaser.png" alt="Teaser Image" style="width: 100%;" />
+        <h4 class="subtitle has-text-centered">
+          We introduce SDR-ToF, a time-of-flight (ToF) sensor that uses commodity software-defined radios (SDRs) for RF-coherent optical depth sensing at megahertz rates. SDR-ToF modulates light at near-GHz frequencies to achieve sub-millimeter depth precision while coherently demodulating the received signal to produce a continuous stream of phase measurements, from which metric depth is recovered. We demonstrate applications including: (a) high-precision displacement sensing of mechanical equipment, (b) audio recovery from direct and indirect vibration sources, (c) structural vibration analysis following impact, and (d–f) high-speed 1D and 2D depth scanning using galvanometer-based laser steering. (APD: Avalanche Photo Diode, RF: Radio-Frequency.)
+        </h4>
+      </div>
+    </div>
+  </section>  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>We present a continuous-wave time-of-flight CW-ToF sensing system capable of megahertz-rate depth measurements using a free-space laser and commodity radio-frequency (RF) communication hardware. Existing high-speed optical displacement and vibration sensing systems typically rely on optical interferometry or specialized heterodyne electronics, making them complex and expensive to deploy. We instead show that commodity software-defined radios (SDRs) can serve as a programmable optical sensing backend by jointly performing laser modulation and RF demodulation of signals measured by a fast photodiode. This architecture enables direct phase-based depth estimation at megahertz temporal rates without requiring optical interferometry. Because both the modulation frequency and readout pipeline are fully programmable in software, the system allows flexible trade-offs between depth range, precision, and temporal bandwidth. The resulting sensor supports high-speed depth and vibration measurements, enabling applications such as monitoring rapidly moving mechanical systems, and reconstructing acoustic signals from vibrating surfaces. We experimentally evaluate a prototype system across multiple sensing scenarios and demonstrate sub-millimeter depth sensitivity at megahertz sampling rates, while analyzing practical limitations including noise, drift, and hardware constraints. Our results show that commodity RF hardware can enable low-cost, high-speed optical depth sensing, opening new opportunities for computational imaging and dynamic scene analysis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Optional Results (embedded results/supplementary site) --><section class="section" id="Results">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Results</h2>
+  </div>
+  <div class="container is-fluid">
+    <iframe id="results-frame" src="suppl_website/index.html?embed=1" title="Results" scrolling="no"
+            style="width:100%; height:1200px; border:0; display:block; overflow:hidden;"
+            loading="lazy"></iframe>
+  </div>
+  <script>
+    (function () {
+      var f = document.getElementById('results-frame');
+      if (!f) return;
+      window.addEventListener('message', function (e) {
+        var h = e && e.data && e.data.sdrtofHeight;
+        if (typeof h === 'number' && h > 0) f.style.height = (h + 8) + 'px';
+      });
+    })();
+  </script>
+</section>  <!-- Optional Supplementary Video (below Results) --><section class="section" id="supplementary-video">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Supplementary Video</h2>
+    <div class="content">
+      <video controls playsinline preload="metadata" style="width:100%; border-radius:6px;">
+        <source src="suppl_website/method_video_sdr_tof.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>  <!-- Optional Method -->  <!-- Carousel -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">        </div>
+      </div>
+    </div>
+  </section>  <!-- Optional Talk Video -->  <!-- Optional Poster -->  <!-- Acknowledgments -->  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{bhaskara2026sdrtof,
+  title   = {SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio},
+  author  = {Bhaskara, Ramchander and Sirikonda, Dhawal and Vengurlekar, Omkar and Kim, Juhyeon and Lazarro, Joseph and Jayasuriya, Suren and Pediredla, Adithya},
+  journal = {ACM Transactions on Graphics (Proc. SIGGRAPH Asia)},
+  year    = {2026},
+  note    = {\dag\ Equal contribution}
+}</code></pre>
+    </div>
+  </section>  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>,
+              adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code — please link back in the footer.
+              Licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                Creative Commons Attribution-ShareAlike 4.0 International License
+              </a>.
+              <br/>
+              The fonts are borrowed from <a href="https://github.com/dartmouth-risc-lab/conf-fonts" target="_blank">online sources</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

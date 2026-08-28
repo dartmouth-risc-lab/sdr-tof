@@ -1,0 +1,242 @@
+/* static/css/custom-fonts.css */
+
+/* =========================================
+   Font faces (Linux Biolinum + Quill + Aldus)
+========================================= */
+@font-face {
+  font-family: "Linux Biolinum";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_r-webfont.woff")
+       format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_rb-webfont.woff")
+       format("woff");
+  font-weight: 700;
+  font-style: normal; /* <- important: font-style not 'bold' */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_ri-webfont.woff")
+       format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Quill (Nature) */
+@font-face {
+  font-family: "Quill";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/nature/webfonts/Quill-Regular.woff")
+       format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quill";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/nature/webfonts/Quill-Bold.woff")
+       format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Aldus Nova (ICCP) */
+@font-face {
+  font-family: "Aldus Nova";
+  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/iccp/webfonts/AldusnovaW01Book.woff")
+       format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================
+   Variables (brand colors + font variables)
+========================================= */
+:root {
+  --dartmouth-green: #1F673C;
+  --columbia-blue:  #1860AB;
+  --cmu-red:        #e03c31;
+  --unc-blue:       #4b9cd3;
+  --rice-blue:      #00205b;
+
+  /* Default (SIGGRAPH-like). Overridden by [data-venue] below. */
+  --font-body: "Linux Biolinum", "Noto Sans", system-ui, -apple-system,
+               "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Linux Biolinum", "Noto Sans", system-ui, -apple-system,
+                  "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================================
+   Venue → font-family mappings
+========================================= */
+/* SIGGRAPH, SIGGRAPH Asia → Linux Biolinum */
+[data-venue="siggraph"],
+[data-venue="siggraph-asia"] {
+  --font-body: "Linux Biolinum", "Noto Sans", system-ui, -apple-system,
+               "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Linux Biolinum", "Noto Sans", system-ui, -apple-system,
+                  "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* CVPR, ICCV, ECCV, NeurIPS, ICML, AAAI, ICLR → Times New Roman */
+[data-venue="cvpr"],
+[data-venue="iccv"],
+[data-venue="eccv"],
+[data-venue="neurips"],
+[data-venue="icml"],
+[data-venue="aaai"],
+[data-venue="iclr"] {
+  --font-body: "Times New Roman", Times, serif;
+  --font-heading: "Times New Roman", Times, serif;
+}
+
+/* ICCP + iccp-tpami → Aldus Nova */
+[data-venue="iccp"],
+[data-venue="iccp-tpami"] {
+  --font-body: "Aldus Nova", Georgia, "Times New Roman", Times, serif;
+  --font-heading: "Aldus Nova", Georgia, "Times New Roman", Times, serif;
+}
+
+/* Eurographics + EGSR → Times New Roman */
+[data-venue="eurographics"],
+[data-venue="egsr"] {
+  --font-body: "Times New Roman", Times, serif;
+  --font-heading: "Times New Roman", Times, serif;
+}
+
+/* Nature + Nature Communications → Quill */
+[data-venue="nature"],
+[data-venue="nature-communications"] {
+  --font-body: "Quill", "Noto Serif", Georgia, "Times New Roman", Times, serif;
+  --font-heading: "Quill", "Noto Serif", Georgia, "Times New Roman", Times, serif;
+}
+
+
+/* =========================================
+   Global text styling
+========================================= */
+html,
+body {
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+  background-color: #ffffff;
+  color: #111;
+}
+
+/* =========================================
+   Title + authors
+========================================= */
+.publication-title {
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+  font-size: 2.5rem;
+}
+
+.publication-authors,
+.publication-authors span,
+.publication-authors a {
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+}
+
+/* Author link weight: bold-ish, but color comes from the parent .affil-X */
+.publication-authors .author-block a {
+  font-weight: 600;
+  color: inherit !important;
+  text-decoration: none;
+}
+
+.publication-authors .author-block a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Make sure each author-block behaves nicely in rows */
+.publication-authors .author-block {
+  display: inline-block;
+  margin: 0 0.1rem;
+}
+
+/* =========================================
+   Equal contribution / guidance text + affiliations
+========================================= */
+.publication-authors .equal-contribution,
+.publication-authors .equal-guidance {
+  display: block;
+  font-family: var(--font-body) !important;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #111;
+  text-align: center;
+}
+
+.publication-authors .affiliations {
+  display: block;
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* The actual colors for .affil-1, .affil-2, ... will be injected by the
+   Python script as a separate <style id="affiliation-colors"> block.
+   Example:
+     .publication-authors .author-block.affil-1 { color: #00693E; }
+     .publication-authors .affiliations .affil-1 { color: #00693E; font-weight:600; }
+*/
+
+/* =========================================
+   Footer typography
+========================================= */
+.footer,
+.footer .content,
+.footer p,
+.footer a {
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.footer a {
+  color: var(--columbia-blue);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   Acceptance banner
+========================================= */
+.acceptance-tag {
+  font-family: var(--font-body) !important;
+  font-weight: 700;
+  color: #ffffff !important;  /* force white text */
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Make sure any strong inside keeps the same color */
+.acceptance-tag strong {
+  color: inherit;
+  font-weight: 700;
+}

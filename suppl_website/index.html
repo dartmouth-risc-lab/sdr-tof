@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDR-ToF</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* When embedded (via ?embed=1) inside the main project page, hide this
+           page's own chrome so only the results content shows. */
+        .embedded .theme-control { display: none !important; }
+        .embedded .hero .paper-title { display: none; }
+        .embedded main { padding-top: 0; }
+        .embedded body { min-height: 0; }
+    </style>
+    <script>
+        if (location.search.indexOf('embed') !== -1 || location.hash.indexOf('embed') !== -1) {
+            document.documentElement.classList.add('embedded');
+        }
+        // Report content height to the host page so the <iframe> can size to fit
+        // (avoids a large blank gap under the embedded section).
+        (function () {
+            if (!document.documentElement.classList.contains('embedded')) return;
+            var last = 0;
+            function ping() {
+                var h = Math.ceil(document.body.scrollHeight);
+                if (h && h !== last) { last = h; parent.postMessage({ sdrtofHeight: h }, '*'); }
+            }
+            window.addEventListener('load', ping);
+            window.addEventListener('resize', ping);
+            document.addEventListener('DOMContentLoaded', ping);
+            setInterval(ping, 300);
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="theme-control">
+        <span>Light</span>
+        <label class="theme-toggle" aria-label="Toggle dark mode">
+            <input id="themeSwitch" type="checkbox" />
+            <span class="theme-slider"></span>
+        </label>
+        <span>Dark</span>
+    </div>
+
+    <main>
+        <section class="hero">
+            <h1 class="paper-title">
+                SDR-ToF: Million Optical Depth Samples per Second Using Software-Defined Radio
+            </h1>
+
+            <nav class="button-row" aria-label="Supplemental sections">
+                <a class="figure-button active" href="#visual-microphone">visual microphone</a>
+                <a class="figure-button" href="#static-depth-scans">static depth scans</a>
+                <a class="figure-button" href="#dynamic-depth-scans">dynamic depth scans</a>
+                <a class="figure-button" href="#optical-velocimetry">optical velocimetry</a>
+                <a class="figure-button" href="#hardware-reproducibility">hardware reproducibility</a>
+            </nav>
+        </section>
+
+        <section class="page-content">
+
+            <article id="visual-microphone" class="subpage active">
+                <h2>visual microphone
+                    <span class="title-note">fast depth rates enable vibration sensing.</span>
+                </h2>
+            
+                <section class="visual-mic-top">
+                    <figure class="vm-figure tuning-fork-panel">
+                        <img src="figures/tuning_fork.svg" alt="tuning fork">
+                        <figcaption>tuning fork</figcaption>
+                    </figure>
+            
+                    <figure class="vm-figure result-panel">
+                        <img src="figures/results_tuning_fork.svg" alt="tuning fork vibration result">
+                        <figcaption>measured vibration and damping</figcaption>
+                    </figure>
+                </section>
+            
+                <div class="vm-explanation">
+                    <p>
+                        Position <strong>X</strong> at the tip does not excite the clang mode; middle hit <strong>Y</strong> does.
+                        The
+                        damping behavior is visible.
+                    </p>
+                </div>
+            
+                <hr class="section-divider">
+            
+                <section class="audio-comparison-grid">
+                    <div class="audio-demo-card">
+                        <figure class="audio-figure">
+                            <img src="figures/direct_audio_figure.svg" alt="direct audio setup">
+                            <figcaption>direct audio</figcaption>
+                        </figure>
+            
+                        <div class="compact-audio-grid">
+                            <div class="audio-item compact">
+                                <div class="audio-label">microphone — guitar tones</div>
+                                <audio id="direct-mic-guitar" src="audio/microphone_guitar.wav"></audio>
+                                <div class="mini-audio" data-audio="direct-mic-guitar">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">ours — guitar tones</div>
+                                <audio id="direct-ours-guitar" src="audio/direct_guitar.wav"></audio>
+                                <div class="mini-audio" data-audio="direct-ours-guitar">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">microphone — mary had a little lamb</div>
+                                <audio id="direct-mic-mary" src="audio/microphone_marylamb.wav"></audio>
+                                <div class="mini-audio" data-audio="direct-mic-mary">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">ours — mary had a little lamb</div>
+                                <audio id="direct-ours-mary" src="audio/direct_marylamb.wav"></audio>
+                                <div class="mini-audio" data-audio="direct-ours-mary">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="audio-demo-card">
+                        <figure class="audio-figure">
+                            <img src="figures/indirect_audio_figure.svg" alt="indirect audio setup">
+                            <figcaption>indirect audio</figcaption>
+                        </figure>
+            
+                        <div class="compact-audio-grid">
+                            <div class="audio-item compact">
+                                <div class="audio-label">microphone — guitar tones</div>
+                                <audio id="indirect-mic-guitar" src="audio/microphone_guitar.wav"></audio>
+                                <div class="mini-audio" data-audio="indirect-mic-guitar">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">ours — guitar tones</div>
+                                <audio id="indirect-ours-guitar" src="audio/indirect_guitar.wav"></audio>
+                                <div class="mini-audio" data-audio="indirect-ours-guitar">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">microphone — mary had a little lamb</div>
+                                <audio id="indirect-mic-mary" src="audio/microphone_marylamb.wav"></audio>
+                                <div class="mini-audio" data-audio="indirect-mic-mary">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+            
+                            <div class="audio-item compact">
+                                <div class="audio-label">ours — mary had a little lamb</div>
+                                <audio id="indirect-ours-mary" src="audio/indirect_marylamb.wav"></audio>
+                                <div class="mini-audio" data-audio="indirect-ours-mary">
+                                    <button type="button" class="mini-play">play</button>
+                                    <input class="mini-progress" type="range" min="0" max="100" value="0" step="0.1"
+                                        aria-label="audio progress">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </article>
+
+            <article id="static-depth-scans" class="subpage">
+                <h2>
+                    static depth Scans
+                    <span class="title-note">static depth scans obtained from point sensors steered with mirrors.</span>
+                </h2>
+                <div class="static-scan-row">
+                    <!-- Pawn scene -->
+                    <section class="static-scene">
+                        <h3>pawn</h3>
+            
+                        <div class="static-scene-grid">
+                            <figure>
+                                <div class="interactive-note placeholder-note">static</div>
+                                <img src="figures/pawn_rgb.jpg" alt="Pawn RGB image">
+                                <figcaption>RGB</figcaption>
+                            </figure>
+            
+                            <figure>
+                                <div class="interactive-note placeholder-note">static</div>
+                                <img src="figures/pawn_intensity.png" alt="Pawn intensity image">
+                                <figcaption>intensity<br><span>magnitude of IQ measurement</span></figcaption>
+                            </figure>
+            
+                            <figure>
+                                <div class="interactive-note">interactive viewer</div>
+                                <div id="pawn-ply-viewer" class="ply-viewer"></div>
+                                <figcaption>phase<br><span>atan2(Q, I)</span></figcaption>
+                            </figure>
+                        </div>
+                    </section>
+            
+                    <div class="static-scan-divider"></div>
+            
+                    <!-- King Queen scene -->
+                    <section class="static-scene">
+                        <h3>king & queen</h3>
+            
+                        <div class="static-scene-grid">
+                            <figure>
+                                <div class="interactive-note placeholder-note">static</div>
+                                <img src="figures/king_queen_rgb.jpg" alt="King and queen RGB image">
+                                <figcaption>RGB</figcaption>
+                            </figure>
+            
+                            <figure>
+                                <div class="interactive-note placeholder-note">static</div>
+                                <img src="figures/king_queen_intensity.png" alt="King and queen intensity image">
+                                <figcaption>intensity<br><span>magnitude of IQ measurement</span></figcaption>
+                            </figure>
+            
+                            <figure>
+                                <div class="interactive-note">interactive viewer</div>
+                                <div id="king-queen-ply-viewer" class="ply-viewer"></div>
+                                <figcaption>phase<br><span>atan2(Q, I)</span></figcaption>
+                            </figure>
+                        </div>
+                    </section>
+                </div>
+            </article>
+
+            <article id="dynamic-depth-scans" class="subpage">
+                <h2>
+                    dynamic depth Scans
+                    <span class="title-note">dynamic depth scans obtained from point sensors steered with mirrors.</span>
+                </h2>
+
+                <section class="dynamic-scans-layout" aria-label="Dynamic depth scan comparison">
+                    <div class="dynamic-panel dynamic-panel-left">
+                        <div class="dynamic-panel-heading">1D scan</div>
+
+                        <div class="dynamic-media-row">
+                            <figure class="dynamic-media-card">
+                                <video autoplay loop muted playsinline>
+                                    <source src="dynamic_depth_results/fan_depth_temporal.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption>Ref. RGB 1D scan scene (scan line is moving left and right on the blade at 200 kHz)</figcaption>
+                            </figure>
+
+                            <figure class="dynamic-media-card tall-scan">
+                                <img src="dynamic_depth_results/fan_temporal_scan.png" alt="1D scan RGB image">
+                                <figcaption>1D depth scan (obtained at 200 lines/second)</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                    <div class="dynamic-panel dynamic-panel-right">
+                        <div class="dynamic-panel-heading">2D scans</div>
+
+                        <div class="dynamic-video-stack">
+                            <figure class="dynamic-media-card wide">
+                                <video autoplay loop muted playsinline>
+                                    <source src="dynamic_depth_results/dynamic_scene_ref_rgb.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption>Ref. RGB 2D scan scene</figcaption>
+                            </figure>
+
+                            <figure class="dynamic-media-card wide">
+                                <video autoplay loop muted playsinline>
+                                    <source src="dynamic_depth_results/dynamic_scene_depth.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption>2D depth scan (Obtained at 4 FPS)</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </section>
+            </article>
+
+            <article id="optical-velocimetry" class="subpage">
+                <h2>
+                    optical velocimetry
+                    <span class="title-note">fast depth rates enable velocity from depth derivatives.</span>
+                </h2>
+            
+                <div class="results-row">
+                    <figure>
+                        <img src="figures/opt_velocimetry_hackzall.svg" alt="Optical velocimetry result for Hackzall">
+                        <figcaption>Hackzall</figcaption>
+                    </figure>
+            
+                    <figure>
+                        <img src="figures/opt_velocimetry_multitool.svg" alt="Optical velocimetry result for multitool">
+                        <figcaption>Multitool</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article id="hardware-reproducibility" class="subpage">
+                <h2>
+                    hardware reproducibility
+                    <span class="title-note">reproducibility of hardware implementation</span>
+                </h2>
+            
+                <video class="section-video" autoplay loop muted playsinline controls>
+                    <source src="figures/hardware_reproducibility.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </article>
+
+        </section>
+    </main>
+     <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <script type="module">
+        import * as THREE from "three";
+        import { PLYLoader } from "three/addons/loaders/PLYLoader.js";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+        const themeSwitch = document.getElementById("themeSwitch");
+        const buttons = document.querySelectorAll(".figure-button");
+        const subpages = document.querySelectorAll(".subpage");
+
+        if (themeSwitch) {
+            themeSwitch.addEventListener("change", function () {
+                document.body.classList.toggle("dark-mode", themeSwitch.checked);
+            });
+        }
+
+        function showSubpage(hash) {
+            const targetHash = hash || "#visual-microphone";
+
+            buttons.forEach((button) => {
+                button.classList.toggle("active", button.getAttribute("href") === targetHash);
+            });
+
+            subpages.forEach((page) => {
+                page.classList.toggle("active", "#" + page.id === targetHash);
+            });
+
+            if (targetHash === "#static-depth-scans") {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        loadStaticPLYViewers();
+                        window.dispatchEvent(new Event("resize"));
+                    });
+                });
+            }
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+                const targetHash = button.getAttribute("href");
+                history.pushState(null, "", targetHash);
+                showSubpage(targetHash);
+            });
+        });
+
+        window.addEventListener("popstate", function () {
+            showSubpage(window.location.hash);
+        });
+
+        const miniPlayers = document.querySelectorAll(".mini-audio");
+
+        miniPlayers.forEach((player) => {
+            const audio = document.getElementById(player.dataset.audio);
+            const button = player.querySelector(".mini-play");
+            const progress = player.querySelector(".mini-progress");
+
+            if (!audio || !button || !progress) return;
+
+            button.addEventListener("click", () => {
+                document.querySelectorAll("audio").forEach((otherAudio) => {
+                    if (otherAudio !== audio) {
+                        otherAudio.pause();
+                    }
+                });
+
+                document.querySelectorAll(".mini-play").forEach((otherButton) => {
+                    if (otherButton !== button) {
+                        otherButton.textContent = "play";
+                    }
+                });
+
+                if (audio.paused) {
+                    audio.play();
+                    button.textContent = "pause";
+                } else {
+                    audio.pause();
+                    button.textContent = "play";
+                }
+            });
+
+            audio.addEventListener("timeupdate", () => {
+                if (audio.duration) {
+                    progress.value = (audio.currentTime / audio.duration) * 100;
+                }
+            });
+
+            progress.addEventListener("input", () => {
+                if (audio.duration) {
+                    audio.currentTime = (progress.value / 100) * audio.duration;
+                }
+            });
+
+            audio.addEventListener("ended", () => {
+                button.textContent = "play";
+                progress.value = 0;
+            });
+        });
+
+        function createPLYViewer(containerId, plyPath, options = {}) {
+            const container = document.getElementById(containerId);
+
+            if (!container) {
+                console.warn("PLY container not found:", containerId);
+                return;
+            }
+
+            if (container.dataset.loaded === "true") {
+                return;
+            }
+
+            container.dataset.loaded = "true";
+
+            console.log("Initializing PLY viewer:", containerId, plyPath);
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff);
+
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 1000);
+            camera.position.set(0, 0, 3);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+
+            const light = new THREE.DirectionalLight(0xffffff, 0.8);
+            light.position.set(1, 1, 2);
+            scene.add(light);
+
+            const loader = new PLYLoader();
+
+            loader.load(
+                plyPath,
+                function (geometry) {
+                    console.log("Loaded PLY:", plyPath);
+
+                    geometry.computeBoundingSphere();
+                    geometry.center();
+
+                    const material = new THREE.PointsMaterial({
+                        color: 0x333333,
+                        size: options.pointSize || 0.01,
+                        sizeAttenuation: true
+                    });
+
+                    const points = new THREE.Points(geometry, material);
+
+                    if (options?.rotationX) points.rotation.x = options.rotationX;
+                    if (options?.rotationY) points.rotation.y = options.rotationY;
+                    if (options?.rotationZ) points.rotation.z = options.rotationZ;
+
+                    if (geometry.boundingSphere) {
+                        const radius = geometry.boundingSphere.radius;
+                        const scale = radius > 0 ? 1.5 / radius : 1;
+                        points.scale.setScalar(scale);
+                    }
+
+                    scene.add(points);
+                },
+                function (xhr) {
+                    if (xhr.total) {
+                        console.log(plyPath, Math.round((xhr.loaded / xhr.total) * 100) + "% loaded");
+                    }
+                },
+                function (error) {
+                    console.error("Failed to load PLY:", plyPath, error);
+                    container.innerHTML = "<p style='padding:1rem;text-align:center;color:#900;'>PLY failed to load</p>";
+                }
+            );
+
+            function resizeViewer() {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                if (width === 0 || height === 0) return;
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height, false);
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                resizeViewer();
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+
+        let staticPLYLoaded = false;
+
+        function loadStaticPLYViewers() {
+            if (staticPLYLoaded) return;
+
+            staticPLYLoaded = true;
+
+            createPLYViewer("pawn-ply-viewer", "static_depth_ply/pawn_normals.ply", {
+                rotationY: Math.PI
+            });
+
+            createPLYViewer("king-queen-ply-viewer", "static_depth_ply/king_queen_normals.ply", {
+                rotationY: Math.PI
+            });
+        }
+
+        showSubpage(window.location.hash);
+    </script>
+</body>
+
+</html>

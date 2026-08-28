@@ -1,0 +1,14 @@
+# OS junk
+.DS_Store
+**/.DS_Store
+
+# scaffold config snapshot (regenerated on each build)
+/.settings/
+
+# stray local copy of the page generator
+/project-website-template/
+
+# large / unreferenced raw data — exceeds GitHub's 100 MB file limit.
+# distribute via a GitHub Release or Git LFS if needed.
+suppl_website/sample_data/
+suppl_website/*.zip
