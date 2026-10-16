@@ -5,7 +5,7 @@
 ========================================= */
 @font-face {
   font-family: "Linux Biolinum";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_r-webfont.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/siggraph/webfonts/linbiolinum_r-webfont.woff")
        format("woff");
   font-weight: 400;
   font-style: normal;
@@ -14,7 +14,7 @@
 
 @font-face {
   font-family: "Linux Biolinum";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_rb-webfont.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/siggraph/webfonts/linbiolinum_rb-webfont.woff")
        format("woff");
   font-weight: 700;
   font-style: normal; /* <- important: font-style not 'bold' */
@@ -23,7 +23,7 @@
 
 @font-face {
   font-family: "Linux Biolinum";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/siggraph/webfonts/linbiolinum_ri-webfont.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/siggraph/webfonts/linbiolinum_ri-webfont.woff")
        format("woff");
   font-weight: 400;
   font-style: italic;
@@ -33,7 +33,7 @@
 /* Quill (Nature) */
 @font-face {
   font-family: "Quill";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/nature/webfonts/Quill-Regular.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/nature/webfonts/Quill-Regular.woff")
        format("woff");
   font-weight: 400;
   font-style: normal;
@@ -42,7 +42,7 @@
 
 @font-face {
   font-family: "Quill";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/nature/webfonts/Quill-Bold.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/nature/webfonts/Quill-Bold.woff")
        format("woff");
   font-weight: 700;
   font-style: normal;
@@ -52,7 +52,7 @@
 /* Aldus Nova (ICCP) */
 @font-face {
   font-family: "Aldus Nova";
-  src: url("https://dartmouth-risc-lab.github.io/conf-fonts/iccp/webfonts/AldusnovaW01Book.woff")
+  src: url("https://risclab-dartmouth.org/conf-fonts/iccp/webfonts/AldusnovaW01Book.woff")
        format("woff");
   font-weight: 400;
   font-style: normal;
